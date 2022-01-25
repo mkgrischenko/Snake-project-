@@ -1,37 +1,44 @@
-# подключаем библиотеки
+"""подключаем библиотеки"""
 import pygame
 import random
 import sys
 
-#Скорость движения игры
+"""Скорость движения игры"""
 speed = 15
 
-width = 400 # ширина игрового окна 
-height = 400 # высота игрового окна
+"""Ширина игрового окна"""
+width = 400
+"""Высота игрового окна"""
+height = 400
 
-# Задаем цвета
+"""Задаем цвета"""
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 
 
-#задаем движения
+"""задаем команды для движения"""
 UP  = 'up'
 DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
-pygame.init() #  запускаем игру
-random.seed() # функция для инициализации случайных чисел
-#Ввод глобальных переменных
+"""Запускаем игру"""
+pygame.init()
+"""Функция для инициализации случайных чисел"""
+random.seed() 
+"""Ввод глобальных переменных"""
 global screen
 global clock
-clock = pygame.time.Clock()  #Игровой модуль для контроля кодров в секунду
-screen = pygame.display.set_mode((width, height)) # задаем окно игры
-pygame.display.set_caption("Snake") # задаем название окна игры
+"""Игровой модуль для контроля кадров в секунду"""
+clock = pygame.time.Clock()
+"""Задаем параметры окна игры"""
+screen = pygame.display.set_mode((width, height))
+"""Задаем название окна игры"""
+pygame.display.set_caption("Snake")
 
-#Задаем класс змейки
 class snake:
+    """Класс змейки"""
     def __init__(self, x, y, color=(GREEN), pixels=None):
         self.x = x
         self.y = y
@@ -45,7 +52,7 @@ class snake:
         self.crash = False
         self.length = 5
         
-#Даем команды для клавиш
+    """Даем команды для клавиш"""
     def events(self, event):
         if event.key == pygame.K_UP:
             self.speedx = 0
@@ -63,11 +70,12 @@ class snake:
     def move(self):
         self.x += self.speedx
         self.y += self.speedy
-#Проверяем случай врезания в самого себя
+
+        """Проверяем случай врезания в самого себя"""
         if (self.x, self.y) in self.pixels:
             self.crash = True
 
-        # Заворачиваем змею по нажатию
+        """Заворачиваем змею по нажатию"""
         if self.x < 0:
             self.x = width-10
         elif self.x >= width:
@@ -79,50 +87,50 @@ class snake:
             
         self.pixels.insert(0, (self.x, self.y))
 
-#Увеличиваем длинну змейки после попадания на еду
+        """Увеличиваем длинну змейки после попадания на еду"""
         if len(self.pixels) > self.length:
             del self.pixels[self.length]
 
-#Рисуем змейку
+    """Рисуем змейку"""
     def draw(self):
         for x, y in self.pixels:
             pygame.draw.rect(screen, (GREEN), (x, y+10, 10, 10), 0)
 
-#Задаем класс еды
 class food():
+    """Задаем класс еды"""
     def __init__(self):
         self.x = random.randrange(20, width - 20, 10)
         self.y = random.randrange(20, height - 20, 10)
 
-#Случай попадания змейки на еду
+    """Случай попадания змейки на еду"""
     def hitCheck(self, snakePixels):
         if snakePixels[0][0] == self.x and snakePixels[0][1] == self.y:
             return True
 
-#Смена позиции еды
+    """Смена позиции еды"""
     def relocate(self):
         self.x = random.randrange(20, width - 20, 10)
         self.y = random.randrange(20, height - 20, 10)
 
-#Рисуем еду
+    """Рисуем еду"""
     def draw(self):
         pygame.draw.rect(screen, (RED), (self.x, self.y+10, 10, 10), 0)
 
-#Команда запускающая игру
-running = True
+"""Команда запускающая игру"""
+running = True 
 arrowKeys = [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]
 food = food()
-#Начальная позиция змейки
+"""Начальная позиция змейки"""
 snake = snake(width/2, height/2)
 
-#Цикл игры
+"""Цикл игры"""
 while running:
     screen.fill((BLACK))
     snake.move()
     snake.draw()
     food.draw()
-
-    if food.hitCheck(snake.pixels): #Увеличиваем змейку если она съедает еду и меняем позицию еды
+    """Увеличиваем змейку если она съедает еду и меняем позицию еды"""
+    if food.hitCheck(snake.pixels):
         food.relocate()
         snake.length = snake.length + 5
 
@@ -136,11 +144,11 @@ while running:
                 running = False
             clock.tick(speed)
             
-    # Обновляет дисплей в конце.
+    """Обновляе дисплей в конце"""
     pygame.display.flip()
     clock.tick(speed)
 
-#Обнавляем игру если у нас проигрыш
+    """Обнавляем игру если у нас проигрыш"""
     while snake.crash:
         pygame.display.flip()
         clock.tick(speed)
