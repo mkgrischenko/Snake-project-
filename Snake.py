@@ -52,8 +52,8 @@ class snake:
         self.crash = False
         self.length = 5
         
-    """Даем команды для клавиш"""
     def events(self, event):
+        """Даем команды для клавиш"""
         if event.key == pygame.K_UP:
             self.speedx = 0
             self.speedy = -10
@@ -91,8 +91,8 @@ class snake:
         if len(self.pixels) > self.length:
             del self.pixels[self.length]
 
-    """Рисуем змейку"""
     def draw(self):
+        """Рисуем змейку"""
         for x, y in self.pixels:
             pygame.draw.rect(screen, (GREEN), (x, y+10, 10, 10), 0)
 
