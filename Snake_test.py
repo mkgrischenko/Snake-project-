@@ -5,7 +5,7 @@ import unittest
 
 class Snaketests(unittest.TestCase):
 
-@patch('pygame.ket.get_pressed')
+    @patch('pygame.ket.get_pressed')
     def test_exit_Snake(self,test_patch):
 
         test_patch.return.value = {pygame.K_ESCAPE : True}
