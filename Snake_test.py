@@ -1,4 +1,5 @@
 import Snake
+from unittest.mock import patch
 import pygame
 import unittest
 
@@ -11,7 +12,7 @@ class Snaketests(unittest.TestCase):
         with self.assertRaises(SystemExit) as exit:
             Snake.maim()
         self.assertEqual(exit.exception.code, 1)
-        
+
 
 
 
