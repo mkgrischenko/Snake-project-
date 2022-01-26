@@ -53,8 +53,10 @@ class snake:
         :param self: стандартное имя первого аргумента для методов объекта
         :param x,y: координаты по оси x,y
         :param color: цвет змейки
-        :param pixels: массив пар координат клеток змейки
-        :param pixels=None: не задан масив пар координат клеток змейки и его нужно задать как pixels """
+        :param pixels: массив пар координат клеток змейки (если не передать pixels, то snake будет принимать любые координаты.
+        если задать сначала pixels=None, то мы сможем задать координаты x,y для данного масива)
+
+        """
         self.x = x
         self.y = y
         self.speedx = 0
@@ -70,7 +72,7 @@ class snake:
     def events(self, event):
         """Метод для обрабоки событий нажатия клавиш
         :param self: стандартное имя первого аргумента для методов объекта
-        :param event: обработка событий pygame"""
+        :param event: событие pygame"""
         if event.key == pygame.K_UP:
             self.speedx = 0
             self.speedy = -10
