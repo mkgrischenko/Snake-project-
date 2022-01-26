@@ -38,8 +38,14 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Snake")
 
 class snake:
-    """Класс змейки"""
+    """Класс змейки
+    Конструктор принимает цвет, размер, позицию, движения змейки"""
     def __init__(self, x, y, color=(GREEN), pixels=None):
+        """Метод для задачи параметров Змейки
+        :param self: стандартное имя первого аргумента для методов объекта
+        :param x,y: координаты по оси x,y
+        :param color: цвет змейки
+        :param pixels: обработка праметров по пикселям"""
         self.x = x
         self.y = y
         self.speedx = 0
@@ -53,7 +59,9 @@ class snake:
         self.length = 5
         
     def events(self, event):
-        """Даем команды для клавиш"""
+        """Метод для обрабоки событий нажатия клавиш
+        :param self: стандартное имя первого аргумента для методов объекта
+        :param event: обработка событий"""
         if event.key == pygame.K_UP:
             self.speedx = 0
             self.speedy = -10
@@ -68,7 +76,8 @@ class snake:
             self.speedy = 0
 
     def move(self):
-        """Задаем движения"""
+        """Метод перемещения объектов
+        :param self: стандартное имя первого аргумента для методов объекта"""
         self.x += self.speedx
         self.y += self.speedy
 
@@ -93,13 +102,17 @@ class snake:
             del self.pixels[self.length]
 
     def draw(self):
-        """Рисуем змейку"""
+        """Метод для того чтобы нарисовать примитивные объекты
+        :param self:стандартное имя первого аргумента для методов объекта """
         for x, y in self.pixels:
             pygame.draw.rect(screen, (GREEN), (x, y+10, 10, 10), 0)
 
 class food():
-    """Задаем класс еды"""
+    """Класс еды
+    Конструктор принимает цвет, размер, локазцию еды"""
     def __init__(self):
+        """Метод для задачи параметров Еды
+        :param self: стандартное имя первого аргумента для методов объекта """
         self.x = random.randrange(20, width - 20, 10)
         self.y = random.randrange(20, height - 20, 10)
 
@@ -109,12 +122,14 @@ class food():
             return True
 
     def relocate(self):
-        """Смена позиции еды"""
+        """Метод для Смена позиции еды
+        :param self: стандартное имя первого аргумента для методов объекта"""
         self.x = random.randrange(20, width - 20, 10)
         self.y = random.randrange(20, height - 20, 10)
 
     def draw(self):
-        """Рисуем еду"""
+        """Метод для того чтобы нарисовать примитивные обЪекты
+        :param self: стандартное имя первого аргумента для методов объекта"""
         pygame.draw.rect(screen, (RED), (self.x, self.y+10, 10, 10), 0)
 
 #Команда запускающая игру
